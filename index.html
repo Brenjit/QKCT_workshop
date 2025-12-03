@@ -234,6 +234,44 @@
                 font-size: 1.8rem;
             }
         }
+        /* POPUP LIGHTBOX */
+.image-popup {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    padding-top: 40px;
+    left: 0;
+    top: 0;
+    width: 100%;
+    height: 100%;
+    overflow: auto;
+    background: rgba(0,0,0,0.8);
+}
+
+.popup-content {
+    margin: auto;
+    display: block;
+    max-width: 90%;
+    max-height: 85vh;
+    border-radius: 8px;
+    box-shadow: 0 0 20px rgba(255,255,255,0.3);
+}
+
+.close-btn {
+    position: absolute;
+    top: 20px;
+    right: 35px;
+    color: #fff;
+    font-size: 40px;
+    font-weight: bold;
+    cursor: pointer;
+    transition: 0.3s;
+}
+
+.close-btn:hover {
+    color: #ccc;
+}
+
     </style>
 </head>
 
@@ -507,9 +545,40 @@
     document.addEventListener('DOMContentLoaded', () => {
         createDots();
         loadAllGalleryImages();  // ← CHANGED TO NEW FUNCTION
+        enableImagePopup();
         goToSlide(0);
     });
+    // POPUP IMAGE VIEWER
+function enableImagePopup() {
+    const popup = document.getElementById("imagePopup");
+    const popupImg = document.getElementById("popupImg");
+    const closeBtn = document.getElementById("closePopup");
+
+    // When clicking an image → show popup
+    document.querySelectorAll(".gallery-item img").forEach(img => {
+        img.addEventListener("click", () => {
+            popup.style.display = "block";
+            popupImg.src = img.src;
+        });
+    });
+
+    // Close button
+    closeBtn.addEventListener("click", () => {
+        popup.style.display = "none";
+    });
+
+    // Close popup when clicking outside the image
+    popup.addEventListener("click", event => {
+        if (event.target === popup) popup.style.display = "none";
+    });
+}
+
 </script>
+<!-- IMAGE POPUP VIEWER -->
+<div id="imagePopup" class="image-popup">
+    <span class="close-btn" id="closePopup">&times;</span>
+    <img id="popupImg" class="popup-content">
+</div>
 
 </body>
 </html>

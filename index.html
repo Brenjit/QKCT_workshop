@@ -471,30 +471,30 @@
         slideInterval = setInterval(nextSlide, 4000);
     });
 
-    // Gallery images - Add your images here
-    const galleryImages = [
-        'images/gallery/workshop1.jpg',
-        'images/gallery/workshop2.jpg',
-        'images/gallery/workshop3.jpg',
-        'images/gallery/workshop4.jpg',
-        'images/gallery/workshop5.jpg',
-        'images/gallery/workshop6.jpg',
-        'images/gallery/workshop7.jpg',
-        'images/gallery/workshop8.jpg'
-    ];
-
-    // Function to load gallery images
-    function loadGalleryImages() {
+    // Function to automatically load all images from gallery folder
+    function loadAllGalleryImages() {
         const gallery = document.getElementById('gallery');
-        galleryImages.forEach(imageSrc => {
+        
+        // List of all your image filenames
+        const imageFilenames = [
+            'DSC00011.JPG',    'DSC00116.JPG',    'DSC00152.JPG',    'DSC00224.JPG',    'DSC00343.JPG',    'DSC09890.JPG',    'DSC09960.JPG',
+'DSC00089.JPG',    'DSC00132.JPG',    'DSC00195.JPG',    'DSC00243.JPG',    'DSC09882.JPG',    'DSC09896.JPG',
+'DSC00104.JPG',    'DSC00147.JPG',    'DSC00216.JPG',    'DSC00320.JPG',    'DSC09886.JPG',    'DSC09955.JPG',
+            // Add more filenames as you add images
+        ];
+        
+        // Create gallery items for each image
+        imageFilenames.forEach(filename => {
             const galleryItem = document.createElement('div');
             galleryItem.className = 'gallery-item';
             
             const img = document.createElement('img');
-            img.src = imageSrc;
-            img.alt = 'Workshop Photo';
+            img.src = `images/gallery/${filename}`;
+            img.alt = 'QKCT Workshop Photo';
+            img.loading = 'lazy'; // For better performance
+            
+            // Show placeholder if image fails to load
             img.onerror = function() {
-                // If image doesn't exist, show placeholder
                 this.src = 'https://via.placeholder.com/300x220/003366/ffffff?text=QKCT+Photo';
             };
             
@@ -506,7 +506,7 @@
     // Initialize everything when page loads
     document.addEventListener('DOMContentLoaded', () => {
         createDots();
-        loadGalleryImages();
+        loadAllGalleryImages();  // ← CHANGED TO NEW FUNCTION
         goToSlide(0);
     });
 </script>
